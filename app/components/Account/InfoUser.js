@@ -11,7 +11,11 @@ import { Icon } from 'react-native-elements/dist/icons/Icon';
 
 export default function InfoUser(props) {
     // doble deconstruring
-    const {userInfo:{uid, photoURL, displayName, email}}=props;
+    const {
+        userInfo:{uid, photoURL, displayName, email},
+        setLoading,
+        setLoadingText
+    }=props;
     // console.log(photoURL);
     // console.log(displayName);
     // console.log(email);
@@ -46,6 +50,8 @@ export default function InfoUser(props) {
     };
 
     const uploadImage=async(uri)=>{
+        setLoadingText("Actualizando Avatar");
+        setLoading(true);
         const response = await fetch(uri);
         // console.log(JSON.stringify(response));
         const blob = await response.blob();
@@ -64,6 +70,7 @@ export default function InfoUser(props) {
                 photoURL: response
             };
             await firebaseApp.auth().currentUser.updateProfile(update);
+            setLoading(false);
         }).catch(()=>{
             ToastAndroid.showWithGravity("Error al actualizar el avatar", ToastAndroid.LONG, ToastAndroid.CENTER);
         })

@@ -5,6 +5,7 @@ import { firebaseApp } from '../../utils/firebase';
 import "firebase/auth";
 import Loading from "../../components/Loading";
 import InfoUser from "../../components/Account/InfoUser";
+import AccountOptions from "../../components/Account/AccountOptions";
 
 export default function UserLogged(){
     const [userInfo, setUserInfo] = useState(null);
@@ -22,8 +23,14 @@ export default function UserLogged(){
     }, [])
     return(
         <View style={ styles.viewUserInfo }>
-            {userInfo && <InfoUser userInfo={userInfo} />}
-            <Text>AccountOptions...</Text>
+            {userInfo && <InfoUser 
+            userInfo={userInfo} 
+            setLoading ={setLoading}
+            setLoadingText={setLoadingText}
+
+            />}
+            <AccountOptions userInfo={userInfo} />
+
             <Button 
             title="Cerrar sesion"
             buttonStyle={styles.btnCloseSession}
